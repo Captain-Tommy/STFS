@@ -8,9 +8,6 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Plyr CSS (via cdnjs for better stability) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.7.8/plyr.min.css" />
-    
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Benguiat:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     
@@ -20,13 +17,6 @@
             font-family: 'StrangerThings';
             src: local('Benguiat'), local('ITC Benguiat'), url('https://fonts.cdnfonts.com/s/14865/Benguiat.woff') format('woff');
             font-weight: bold;
-        }
-
-        :root {
-            --plyr-color-main: #dc2626; /* Stranger Things Red */
-            --plyr-video-background: #000;
-            --plyr-menu-background: rgba(20, 20, 20, 0.95);
-            --plyr-menu-color: #fff;
         }
 
         body {
@@ -45,29 +35,6 @@
             letter-spacing: -0.5px;
         }
 
-        /* --- Custom Player Styling --- */
-        
-        .plyr--video {
-            border-radius: 4px;
-            box-shadow: 0 0 40px rgba(220, 38, 38, 0.1);
-            border: 1px solid #222;
-        }
-
-        /* Customize the big play button */
-        .plyr__control--overlaid {
-            background: rgba(185, 28, 28, 0.9) !important;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
-        }
-        
-        .plyr__control--overlaid:hover {
-            background: #ef4444 !important;
-        }
-
-        /* Scrubber handle */
-        .plyr__control input[type=range]::-webkit-slider-thumb {
-            box-shadow: 0 0 10px rgba(220, 38, 38, 0.8) !important;
-        }
-
         /* Tape Label Style */
         .tape-label {
             background: #e5e5e5;
@@ -77,11 +44,25 @@
             box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
             border: 1px solid #fff;
         }
-        
-        /* --- CLEAN MODE CONFIG --- */
-        /* Disable all interaction with the YouTube iframe so no menus/links appear on hover */
-        .plyr__video-wrapper iframe {
-            pointer-events: none;
+
+        /* Responsive Iframe Container */
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            box-shadow: 0 0 40px rgba(220, 38, 38, 0.15);
+            border: 1px solid #333;
+            background: #000;
+            border-radius: 4px;
+        }
+
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
@@ -91,7 +72,7 @@
         
         <!-- Header -->
         <header class="text-center mb-16 mt-8 relative">
-            <h2 class="text-red-800 text-xs tracking-[0.5em] uppercase mb-4 font-bold opacity-60">Archive of</h2>
+            <h2 class="text-red-800 text-xs tracking-[0.5em] uppercase mb-4 font-bold opacity-60">Archive Level 4</h2>
             <h1 class="st-title text-5xl sm:text-7xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-t from-red-600 to-red-500" style="-webkit-text-stroke: 1px #500;">
                 STRANGER THINGS
             </h1>
@@ -102,24 +83,42 @@
 
         <!-- Video 1 Section -->
         <section class="mb-24 relative">
-            <!-- Label -->
             <div class="absolute -top-4 -left-2 z-20">
                 <div class="tape-label inline-block px-4 py-1 text-sm transform -rotate-2">EVIDENCE #001</div>
             </div>
-
-            <!-- Plyr div container -->
-            <div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="_EMpWA5h19o"></div>
+            
+            <div class="iframe-container">
+                <iframe 
+                    width="560" 
+                    height="315" 
+                    src="https://www.youtube.com/embed/_EMpWA5h19o?si=p_3mnL4W_cD2AK2E" 
+                    title="Stranger Things: The First Shadow - Act 1" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerpolicy="strict-origin-when-cross-origin" 
+                    allowfullscreen>
+                </iframe>
+            </div>
         </section>
 
         <!-- Video 2 Section -->
         <section class="mb-24 relative">
-             <!-- Label -->
              <div class="absolute -top-4 -left-2 z-20">
                 <div class="tape-label inline-block px-4 py-1 text-sm transform -rotate-1">EVIDENCE #002</div>
             </div>
 
-            <!-- Plyr div container -->
-            <div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="CF5uUyOskEg"></div>
+            <div class="iframe-container">
+                <iframe 
+                    width="560" 
+                    height="315" 
+                    src="https://www.youtube.com/embed/CF5uUyOskEg?si=iJtYjQZSBN8C5XTU" 
+                    title="Stranger Things: The First Shadow - Act 2" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerpolicy="strict-origin-when-cross-origin" 
+                    allowfullscreen>
+                </iframe>
+            </div>
         </section>
 
         <footer class="text-center pb-12 pt-8 text-xs font-mono border-t border-red-900/10 w-full">
@@ -128,41 +127,5 @@
 
     </main>
 
-    <!-- Plyr JS (via cdnjs for better stability) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.7.8/plyr.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Check if Plyr loaded successfully
-            if (typeof Plyr === 'undefined') {
-                console.error("Plyr library failed to load.");
-                return;
-            }
-
-            const players = Array.from(document.querySelectorAll('.js-player')).map(p => new Plyr(p, {
-                controls: [
-                    'play-large',
-                    'play',
-                    'progress',
-                    'current-time',
-                    'mute',
-                    'volume',
-                    'fullscreen',
-                ],
-                // Disable storage to prevent SecurityErrors
-                storage: { enabled: false },
-                // Youtube configuration
-                youtube: { 
-                    noCookie: true, 
-                    rel: 0, 
-                    showinfo: 0, 
-                    iv_load_policy: 3, 
-                    modestbranding: 1,
-                    controls: 0,
-                    disablekb: 1,
-                    playsinline: 1
-                }
-            }));
-        });
-    </script>
 </body>
 </html>
