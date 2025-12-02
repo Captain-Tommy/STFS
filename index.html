@@ -8,8 +8,8 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Plyr CSS -->
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+    <!-- Plyr CSS (via cdnjs for better stability) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.7.8/plyr.min.css" />
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Benguiat:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -78,7 +78,8 @@
             border: 1px solid #fff;
         }
         
-        /* Hide YouTube elements interactions */
+        /* --- CLEAN MODE CONFIG --- */
+        /* Disable all interaction with the YouTube iframe so no menus/links appear on hover */
         .plyr__video-wrapper iframe {
             pointer-events: none;
         }
@@ -90,7 +91,7 @@
         
         <!-- Header -->
         <header class="text-center mb-16 mt-8 relative">
-            <h2 class="text-red-800 text-xs tracking-[0.5em] uppercase mb-4 font-bold opacity-60">The Archive</h2>
+            <h2 class="text-red-800 text-xs tracking-[0.5em] uppercase mb-4 font-bold opacity-60">Archive of</h2>
             <h1 class="st-title text-5xl sm:text-7xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-t from-red-600 to-red-500" style="-webkit-text-stroke: 1px #500;">
                 STRANGER THINGS
             </h1>
@@ -127,11 +128,17 @@
 
     </main>
 
-    <!-- Plyr JS -->
-    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+    <!-- Plyr JS (via cdnjs for better stability) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.7.8/plyr.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const players = Plyr.setup('.js-player', {
+            // Check if Plyr loaded successfully
+            if (typeof Plyr === 'undefined') {
+                console.error("Plyr library failed to load.");
+                return;
+            }
+
+            const players = Array.from(document.querySelectorAll('.js-player')).map(p => new Plyr(p, {
                 controls: [
                     'play-large',
                     'play',
@@ -141,16 +148,20 @@
                     'volume',
                     'fullscreen',
                 ],
-                // Youtube specific config to minimize UI
+                // Disable storage to prevent SecurityErrors
+                storage: { enabled: false },
+                // Youtube configuration
                 youtube: { 
                     noCookie: true, 
                     rel: 0, 
                     showinfo: 0, 
                     iv_load_policy: 3, 
                     modestbranding: 1,
-                    controls: 0 // Hide native controls
+                    controls: 0,
+                    disablekb: 1,
+                    playsinline: 1
                 }
-            });
+            }));
         });
     </script>
 </body>
