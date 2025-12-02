@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stranger Things: The First Shadow - Confidential</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Plyr CSS -->
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Benguiat:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- Stranger Things Aesthetics --- */
+        @font-face {
+            font-family: 'StrangerThings';
+            src: local('Benguiat'), local('ITC Benguiat'), url('https://fonts.cdnfonts.com/s/14865/Benguiat.woff') format('woff');
+            font-weight: bold;
+        }
+
+        :root {
+            --plyr-color-main: #dc2626; /* Stranger Things Red */
+            --plyr-video-background: #000;
+            --plyr-menu-background: rgba(20, 20, 20, 0.95);
+            --plyr-menu-color: #fff;
+        }
+
+        body {
+            background-color: #050505;
+            color: #e2e2e2;
+            font-family: 'Roboto Mono', monospace;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(30, 0, 0, 0.5) 0%, rgba(0, 0, 0, 1) 100%),
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+            overflow-x: hidden;
+        }
+
+        .st-title {
+            font-family: 'StrangerThings', serif;
+            text-shadow: 0 0 8px #991b1b, 0 0 20px #000;
+            letter-spacing: -0.5px;
+        }
+
+        /* --- Custom Player Styling --- */
+        
+        .plyr--video {
+            border-radius: 4px;
+            box-shadow: 0 0 40px rgba(220, 38, 38, 0.1);
+            border: 1px solid #222;
+        }
+
+        /* Customize the big play button */
+        .plyr__control--overlaid {
+            background: rgba(185, 28, 28, 0.9) !important;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+        }
+        
+        .plyr__control--overlaid:hover {
+            background: #ef4444 !important;
+        }
+
+        /* Scrubber handle */
+        .plyr__control input[type=range]::-webkit-slider-thumb {
+            box-shadow: 0 0 10px rgba(220, 38, 38, 0.8) !important;
+        }
+
+        /* Tape Label Style */
+        .tape-label {
+            background: #e5e5e5;
+            color: #000;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            border: 1px solid #fff;
+        }
+        
+        /* Hide YouTube elements interactions */
+        .plyr__video-wrapper iframe {
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4 sm:p-8">
+
+    <main class="w-full max-w-4xl z-10">
+        
+        <!-- Header -->
+        <header class="text-center mb-16 mt-8 relative">
+            <h2 class="text-red-800 text-xs tracking-[0.5em] uppercase mb-4 font-bold opacity-60">The Archive</h2>
+            <h1 class="st-title text-5xl sm:text-7xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-t from-red-600 to-red-500" style="-webkit-text-stroke: 1px #500;">
+                STRANGER THINGS
+            </h1>
+            <h2 class="st-title text-2xl sm:text-3xl text-red-600 mt-2 uppercase tracking-widest opacity-90">
+                The First Shadow
+            </h2>
+        </header>
+
+        <!-- Video 1 Section -->
+        <section class="mb-24 relative">
+            <!-- Label -->
+            <div class="absolute -top-4 -left-2 z-20">
+                <div class="tape-label inline-block px-4 py-1 text-sm transform -rotate-2">EVIDENCE #001</div>
+            </div>
+
+            <!-- Plyr div container -->
+            <div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="_EMpWA5h19o"></div>
+        </section>
+
+        <!-- Video 2 Section -->
+        <section class="mb-24 relative">
+             <!-- Label -->
+             <div class="absolute -top-4 -left-2 z-20">
+                <div class="tape-label inline-block px-4 py-1 text-sm transform -rotate-1">EVIDENCE #002</div>
+            </div>
+
+            <!-- Plyr div container -->
+            <div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="CF5uUyOskEg"></div>
+        </section>
+
+        <footer class="text-center pb-12 pt-8 text-xs font-mono border-t border-red-900/10 w-full">
+            <p class="text-gray-500 tracking-wider">made by <span class="text-red-700 font-bold hover:text-red-500 transition-colors cursor-default">cinephiles.cvr</span></p>
+        </footer>
+
+    </main>
+
+    <!-- Plyr JS -->
+    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const players = Plyr.setup('.js-player', {
+                controls: [
+                    'play-large',
+                    'play',
+                    'progress',
+                    'current-time',
+                    'mute',
+                    'volume',
+                    'fullscreen',
+                ],
+                // Youtube specific config to minimize UI
+                youtube: { 
+                    noCookie: true, 
+                    rel: 0, 
+                    showinfo: 0, 
+                    iv_load_policy: 3, 
+                    modestbranding: 1,
+                    controls: 0 // Hide native controls
+                }
+            });
+        });
+    </script>
+</body>
+</html>
